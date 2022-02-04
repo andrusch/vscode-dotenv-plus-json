@@ -3,7 +3,7 @@
 	"displayName": ".env ❤️ JSON",
 	"description": "Easily convert .env to json and json to .env",
 	"version": "1.0.0",
-	"publisher": "andrusch",
+	"publisher": "OrangeInfusion",
 	"engines": {
 		"vscode": "^1.56.0"
 	},
