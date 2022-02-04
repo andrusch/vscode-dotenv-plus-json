@@ -1,0 +1,194 @@
+{
+	"name": "dotenv-plus-json",
+	"displayName": ".env ❤️ JSON",
+	"description": "Easily convert .env to json and json to .env",
+	"version": "1.0.0",
+	"publisher": "andrusch",
+	"engines": {
+		"vscode": "^1.56.0"
+	},
+	"icon": "logo/logo.png",
+	"contributors": [
+		{
+			"name": "Charles Andrus",
+			"url": "https://github.com/andrusch",
+			"email": "charles.h.andrus@gmail.com"
+		}
+	],
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"converter",
+		"dotenv converter",
+		"json converter",
+		"dotenv to json",
+		"json to dotenv"
+	],
+	"activationEvents": [
+		"workspaceContains:**/**.json",
+		"workspaceContains:**/**.env",
+		"onCommand:extension.rightClickJson",
+		"onCommand:extension.rightClickDotEnv",
+		"onCommand:extension.dotEnvSelectionToJson",
+		"onCommand:extension.jsonSelectionToDotEnv",
+		"onCommand:extension.convertJsonSelectionsToDotEnv",
+		"onCommand:extension.convertDotEnvSelectionsToJson"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.rightClickJson",
+				"title": "Convert to .env",
+				"enablement": "resourceExtname == .json"
+			},
+			{
+				"command": "extension.rightClickDotEnv",
+				"title": "Convert to JSON",
+				"enablement": "resourceExtname == .env"
+			},
+			{
+				"command": "extension.dotEnvSelectionToJson",
+				"title": "Convert selection to JSON",
+				"enablement": "editorHasSelection"
+			},
+			{
+				"command": "extension.jsonSelectionToDotEnv",
+				"title": "Convert selection to .env",
+				"enablement": "editorHasSelection"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "extension.rightClickJson",
+					"when": "resourceExtname == .json"
+				},
+				{
+					"command": "extension.rightClickDotEnv",
+					"when": "resourceExtname == .env"
+				},
+				{
+					"command": "extension.dotEnvSelectionToJson",
+					"title": "Convert selection to JSON",
+					"when": "editorHasSelection"
+				},
+				{
+					"command": "extension.jsonSelectionToDotEnv",
+					"title": "Convert selection to .env",
+					"when": "editorHasSelection"
+				}
+			],
+			"explorer/context": [
+				{
+					"group": "1_modification",
+					"command": "extension.rightClickJson",
+					"when": "resourceExtname == .json"
+				},
+				{
+					"group": "1_modification",
+					"command": "extension.rightClickDotEnv",
+					"when": "resourceExtname == .env"
+				}
+			]
+		},
+		"configuration": [
+			{
+				"title": ".env Plus Json",
+				"properties": {
+					"dotenv-plus-json.convertOnRename": {
+						"type": "boolean",
+						"description": "Convert .env/JSON files on rename",
+						"deprecationMessage": "please refer to use dotenv-plus-json configuration object"
+					},
+					"dotenv-plus-json": {
+						"type": "object",
+						"default": {
+							"convertOnRename": true,
+							"fileExtensions": {
+								"env": ".env",
+								"json": ".json"
+							}
+						},
+						"properties": {
+							"convertOnRename": {
+								"type": "boolean",
+								"description": "Convert .ENV/JSON files on rename",
+								"default": true
+							},
+							"fileExtensions": {
+								"type": "object",
+								"description": "define what filename extension(s) to use when converting file(s)",
+								"properties": {
+									"env": {
+										"type": "string",
+										"description": "env filename extension",
+										"enum": [
+											".env"
+										]
+									},
+									"json": {
+										"type": "string",
+										"description": "json filename extension",
+										"enum": [
+											".json"
+										]
+									}
+								}
+							},
+							"keepOriginalFiles": {
+								"type": [
+									"string"
+								],
+								"description": "Keep original files when converting. Use ask to be asked- or use always to always keep files on conversion",
+								"enum": [
+									"ask",
+									"always"
+								]
+							}
+						}
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run webpack",
+		"webpack": "webpack --mode production",
+		"webpack-dev": "webpack --mode development --watch",
+		"compile": "tsc -p ./",
+		"lint": "eslint src --ext ts",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run webpack && npm run lint",
+		"test": "node ./out/test/runTest.js",
+		"preversion": "npm run pretest",
+		"postversion": "git push && git push --tags"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^7.0.1",
+		"@types/node": "^15.6.1",
+		"@types/vscode": "^1.56.0",
+		"@typescript-eslint/eslint-plugin": "^4.25.0",
+		"@typescript-eslint/parser": "^4.25.0",
+		"eslint": "7.27.0",
+		"glob": "^7.1.6",
+		"mocha": "^7.1.1",
+		"ts-loader": "^8.0.18",
+		"typescript": "^4.3.2",
+		"vscode-test": "^1.5.1",
+		"webpack": "5.38.0",
+		"webpack-cli": "^4.7.0"
+	},
+	"dependencies": {
+		"dotenv": "^16.0.0"
+	},
+	"bugs": {
+		"url": "https://github.com/andrusch/vscode-dotenv-plus-json/issues/new"
+	},
+	"repository": {
+		"url": "https://github.com/andrusch/vscode-dotenv-plus-json",
+		"type": "git"
+	}
+}
